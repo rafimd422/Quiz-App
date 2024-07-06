@@ -1,10 +1,10 @@
 'use client'
-import React, { useState } from 'react';
+import { FC, useState } from 'react';
 import EmailInput from '@/components/EmailInput';
 import PasswordInput from '@/components/PasswordInput';
 import Link from 'next/link';
 
-const SignIn: React.FC = () => {
+const SignIn: FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
@@ -21,7 +21,7 @@ const SignIn: React.FC = () => {
         } else if (password.length < 6) {
             newErrors.password = 'Incorrect Password';
         }
-        
+
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };

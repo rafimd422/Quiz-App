@@ -17,6 +17,9 @@ const PasswordInput: React.FC<PasswordInputProps> = ({ value, onChange }) => {
 
     return (
         <div className="relative">
+                                        <label className="block font-medium text-sm text-gray-700" htmlFor="password">
+                                Password
+                            </label>
             <input
                 id="password"
                 type={passwordVisible ? 'text' : 'password'}

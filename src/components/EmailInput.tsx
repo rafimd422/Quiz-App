@@ -10,8 +10,7 @@ interface EmailInputProps {
 
 const EmailInput: FC<EmailInputProps> = ({ value, onChange }) => {
     return (
-        <div>
-            
+        <>
             <label className="block font-medium text-sm text-gray-700" htmlFor="email">
                 Email
             </label>
@@ -23,7 +22,7 @@ const EmailInput: FC<EmailInputProps> = ({ value, onChange }) => {
                 value={value}
                 onChange={onChange}
             />
-        </div>
+        </>
     );
 };
 

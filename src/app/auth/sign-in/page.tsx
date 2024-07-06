@@ -1,14 +1,24 @@
 'use client'
+
 import { FC, useState } from 'react';
 import EmailInput from '@/components/EmailInput';
 import PasswordInput from '@/components/PasswordInput';
 import Link from 'next/link';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { useRouter } from 'next/navigation';
+import { toast, ToastContainer } from 'react-toastify';
+import auth from '../../../../firebase.config';
+import useAuth from '@/Hooks/useAuth';
+
+
 
 const SignIn: FC = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const { user } = useAuth();
+    const [email, setEmail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
     const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
-
+    const router = useRouter();
+console.log(user)
     const validateForm = () => {
         const newErrors: { email?: string; password?: string } = {};
         if (!email) {
@@ -26,11 +36,17 @@ const SignIn: FC = () => {
         return Object.keys(newErrors).length === 0;
     };
 
-    const handleSubmit = (event: React.FormEvent) => {
+    const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         if (validateForm()) {
-            console.log({ email, password });
-            //I will Handle sign-in logic here
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                toast.success('Login Successful!');
+                router.push('/'); 
+            } catch (error) {
+                console.error('Error signing in:', error);
+                toast.error('Login Failed!');
+            }
         }
     };
 
@@ -85,6 +101,7 @@ const SignIn: FC = () => {
                     </div>
                 </div>
             </div>
+            <ToastContainer />
         </div>
     );
 };

@@ -1,11 +1,18 @@
-'use client'
+"use client";
 
 import { FC, useState } from "react";
 import PasswordInput from "@/components/PasswordInput";
 import EmailInput from "@/components/EmailInput";
+import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import Link from "next/link";
+import auth from "../../../../firebase.config";
+import "react-toastify/dist/ReactToastify.css"; // Import CSS for Toastify
+import { Bounce, toast, ToastContainer } from "react-toastify";
+import { useRouter } from "next/navigation";
+import useAuth from "@/Hooks/useAuth";
 
 const SignUp: FC = () => {
+    const { user } = useAuth();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,7 +21,11 @@ const SignUp: FC = () => {
     password?: string;
     name?: string;
   }>({});
+  const router = useRouter();
 
+  const [createUserWithEmailAndPassword, loading] =
+    useCreateUserWithEmailAndPassword(auth);
+  console.log(user);
   const validateForm = () => {
     const newErrors: { email?: string; password?: string; name?: string } = {};
 
@@ -40,11 +51,37 @@ const SignUp: FC = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     if (validateForm()) {
-      console.log({ name, email, password });
-      //I will Handle sign-up logic here
+      try {
+        await createUserWithEmailAndPassword(email, password);
+        toast.success("Registration Successful!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+        router.push("/");
+      } catch (error) {
+        console.error("Error creating user:", error);
+        toast.error("Registration Failed!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+      }
     }
   };
 
@@ -113,13 +150,13 @@ const SignUp: FC = () => {
                 className="ml-4 inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-900 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
                 type="submit"
               >
-                Sign Up
+                {loading ? "Loading..." : "Sign Up"}
               </button>
             </div>
           </form>
 
           <div className="flex justify-center mt-4 mb-1">
-            Already have an account?{" "}
+            Already have an account?
             <Link
               href={"/auth/sign-in"}
               className="ms-2 text-red-800 hover:text-blue-600"
@@ -129,6 +166,7 @@ const SignUp: FC = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

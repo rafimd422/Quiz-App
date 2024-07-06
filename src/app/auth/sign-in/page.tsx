@@ -1,0 +1,102 @@
+'use client'
+
+import { FC, useState } from 'react';
+import PasswordInput from '@/components/PasswordInput';
+
+const SignIn: FC = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
+
+    const validateForm = () => {
+        const newErrors: { email?: string; password?: string } = {};
+        if (!email) {
+            newErrors.email = 'Email is required';
+        } else if (!/\S+@\S+\.\S+/.test(email)) {
+            newErrors.email = 'Email is invalid';
+        }
+        if (!password) {
+            newErrors.password = 'Password is required';
+        }else if(password.length < 6){
+            newErrors.password = 'Password must contain minimum 6 character';
+        }
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
+
+    
+    const handleSubmit = (event: React.FormEvent) => {
+        event.preventDefault();
+        if (validateForm()) {
+            console.log({ email, password });
+            
+        }
+    };
+
+    return (
+        <div className="text-gray-900 antialiased">
+            <div className="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-[#f8f4f3]">
+                <div>
+                    <h2 className="font-bold text-3xl cursor-none">
+                        Quiz <span className="bg-gray-800 text-white px-2 rounded-md">Master</span>
+                    </h2>
+                </div>
+
+                <div className="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
+                    <form onSubmit={handleSubmit}>
+                        <div className="py-8">
+                            <center>
+                                <span className="text-2xl font-semibold">Log In</span>
+                            </center>
+                        </div>
+
+                        <div>
+                            <label className="block font-medium text-sm text-gray-700" htmlFor="email">
+                                Email
+                            </label>
+                            <input
+                                type="email"
+                                name="email"
+                                placeholder="Email"
+                                className="w-full rounded-md py-2.5 px-4 border text-sm outline-gray-800"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                            {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+                        </div>
+
+                        <div className="mt-4">
+                            <label className="block font-medium text-sm text-gray-700" htmlFor="password">
+                                Password
+                            </label>
+                            <PasswordInput
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                            {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
+                        </div>
+
+                        <div className="block mt-4">
+                        </div>
+
+                        <div className="flex items-center justify-end mt-4">
+                            <button
+                                className="ml-4 inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-900 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
+                                type="submit"
+                            >
+                                Sign In
+                            </button>
+                        </div>
+                    </form>
+
+                    <div className="flex justify-center mt-4 mb-1">
+                        Don't have an account? Sign up
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default SignIn;

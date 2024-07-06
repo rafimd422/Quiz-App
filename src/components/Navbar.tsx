@@ -16,7 +16,9 @@ const Navbar = async () => {
         </Link>
         <div className="flex items-center">
 
+            <Link href={"/auth/sign-in"}>
             <SignInButton text={"Sign In"} />
+            </Link>
         </div>
       </div>
     </div>

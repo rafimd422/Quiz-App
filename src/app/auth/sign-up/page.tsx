@@ -1,10 +1,11 @@
 'use client'
 
-import { FC, useState } from 'react';
+import React, { useState } from 'react';
 import PasswordInput from '@/components/PasswordInput';
+import EmailInput from '@/components/EmailInput';
 import Link from 'next/link';
 
-const SignUp: FC = () => {
+const SignUp: React.FC = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -39,7 +40,7 @@ const SignUp: FC = () => {
         event.preventDefault();
         if (validateForm()) {
             console.log({ name, email, password });
-            // Handle sign-up logic here
+            //I will Handle sign-up logic here
         }
     };
 
@@ -76,18 +77,11 @@ const SignUp: FC = () => {
                         </div>
 
                         <div className="mt-4">
-                            <label className="block font-medium text-sm text-gray-700" htmlFor="email">
-                                Email
-                            </label>
-                            <input
-                                type="email"
-                                name="email"
-                                placeholder="Email"
-                                className="w-full rounded-md py-2.5 px-4 border text-sm outline-gray-800"
+                            <EmailInput
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                             />
-                            {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+                                                        {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
                         </div>
 
                         <div className="mt-4">
@@ -112,7 +106,8 @@ const SignUp: FC = () => {
                     </form>
 
                     <div className="flex justify-center mt-4 mb-1">
-                        Already have an account? <Link href={'/auth/sign-in'} className='ms-2 text-red-800 hover:text-blue-600'>
+                        Already have an account?{' '}
+                        <Link href={'/auth/sign-in'} className="ms-2 text-red-800 hover:text-blue-600">
                             Sign in
                         </Link>
                     </div>

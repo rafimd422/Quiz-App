@@ -1,10 +1,10 @@
 'use client'
-
-import { FC, useState } from 'react';
+import React, { useState } from 'react';
+import EmailInput from '@/components/EmailInput';
 import PasswordInput from '@/components/PasswordInput';
 import Link from 'next/link';
 
-const SignIn: FC = () => {
+const SignIn: React.FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
@@ -18,20 +18,18 @@ const SignIn: FC = () => {
         }
         if (!password) {
             newErrors.password = 'Password is required';
-        }else if(password.length < 6){
-            newErrors.password = 'Password must contain minimum 6 character';
+        } else if (password.length < 6) {
+            newErrors.password = 'Incorrect Password';
         }
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
 
-
-    
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
         if (validateForm()) {
             console.log({ email, password });
-            
+            //I will Handle sign-in logic here
         }
     };
 
@@ -53,14 +51,7 @@ const SignIn: FC = () => {
                         </div>
 
                         <div>
-                            <label className="block font-medium text-sm text-gray-700" htmlFor="email">
-                                Email
-                            </label>
-                            <input
-                                type="email"
-                                name="email"
-                                placeholder="Email"
-                                className="w-full rounded-md py-2.5 px-4 border text-sm outline-gray-800"
+                            <EmailInput
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                             />
@@ -68,17 +59,11 @@ const SignIn: FC = () => {
                         </div>
 
                         <div className="mt-4">
-                            <label className="block font-medium text-sm text-gray-700" htmlFor="password">
-                                Password
-                            </label>
                             <PasswordInput
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                             {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
-                        </div>
-
-                        <div className="block mt-4">
                         </div>
 
                         <div className="flex items-center justify-end mt-4">
@@ -92,8 +77,9 @@ const SignIn: FC = () => {
                     </form>
 
                     <div className="flex justify-center mt-4 mb-1">
-                        Don't have an account?  <Link href={'/auth/sign-up'} className='ms-2 text-red-800 hover:text-blue-600'>
-                          Register Now
+                        Don't have an account?{' '}
+                        <Link href={'/auth/sign-up'} className="ms-2 text-red-800 hover:text-blue-600">
+                            Register Now
                         </Link>
                     </div>
                 </div>

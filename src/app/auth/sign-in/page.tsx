@@ -21,6 +21,7 @@ const SignIn: React.FC = () => {
         } else if (password.length < 6) {
             newErrors.password = 'Incorrect Password';
         }
+        
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };

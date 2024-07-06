@@ -12,6 +12,7 @@ const SignUp: React.FC = () => {
     const [errors, setErrors] = useState<{ email?: string; password?: string; name?: string }>({});
 
     const validateForm = () => {
+        
         const newErrors: { email?: string; password?: string; name?: string } = {};
 
         if (!name) {

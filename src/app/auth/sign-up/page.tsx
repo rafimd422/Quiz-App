@@ -6,7 +6,7 @@ import EmailInput from "@/components/EmailInput";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import Link from "next/link";
 import auth from "../../../../firebase.config";
-import "react-toastify/dist/ReactToastify.css"; // Import CSS for Toastify
+import "react-toastify/dist/ReactToastify.css"; 
 import { Bounce, toast, ToastContainer } from "react-toastify";
 import { useRouter } from "next/navigation";
 import useAuth from "@/Hooks/useAuth";

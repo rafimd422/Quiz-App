@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { FC, useState } from 'react';
 import EmailInput from '@/components/EmailInput';
@@ -7,10 +7,9 @@ import Link from 'next/link';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; // Import CSS for Toastify
 import auth from '../../../../firebase.config';
 import useAuth from '@/Hooks/useAuth';
-
-
 
 const SignIn: FC = () => {
     const { user } = useAuth();
@@ -18,7 +17,8 @@ const SignIn: FC = () => {
     const [password, setPassword] = useState<string>('');
     const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
     const router = useRouter();
-console.log(user)
+    console.log(user);
+
     const validateForm = () => {
         const newErrors: { email?: string; password?: string } = {};
         if (!email) {

@@ -51,8 +51,8 @@ const SignIn: FC = () => {
     };
 
     return (
-        <div className="text-gray-900 antialiased">
-            <div className="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-[#f8f4f3]">
+        <div className="text-gray-900">
+            <div className="min-h-screen flex flex-col justify-center items-center pt-6 sm:pt-0 px-4 bg-[#f8f4f3]">
                 <div>
                     <h2 className="font-bold text-3xl cursor-none">
                         Quiz <span className="bg-gray-800 text-white px-2 rounded-md">Master</span>

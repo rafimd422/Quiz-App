@@ -3,7 +3,8 @@ import GoogleLogin from "./GoogleLogin";
 
 const WelcomeCard: FC = () => {
   return (
-    <div className="rounded-xl border bg-card text-card-foreground shadow min-w-[300px]">
+    <div className="lg:w-1/4 sm:w-1/3 w-2/3 h-[90vh] mx-auto flex justify-center items-center">
+<div className="rounded-xl border bg-card text-card-foreground shadow min-w-[300px]">
       <div className="flex flex-col space-y-1.5 sm:p-6 p-5">
         <h3 className="font-semibold leading-none tracking-tight">
           Welcome to QuizMaster!
@@ -17,6 +18,10 @@ const WelcomeCard: FC = () => {
         <GoogleLogin />
       </div>
     </div>
+
+
+    </div>
+
   );
 };
 

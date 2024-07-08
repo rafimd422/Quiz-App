@@ -1,5 +1,6 @@
 "use client";
 
+import { updateProfile } from "firebase/auth";
 import { FC, useState } from "react";
 import PasswordInput from "@/components/PasswordInput";
 import EmailInput from "@/components/EmailInput";
@@ -55,19 +56,22 @@ const SignUp: FC = () => {
     event.preventDefault();
     if (validateForm()) {
       try {
-        await createUserWithEmailAndPassword(email, password);
-        toast.success("Registration Successful!", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          transition: Bounce,
-        });
-        router.push("/");
+        const userCredential = await createUserWithEmailAndPassword(email, password);
+        if (userCredential) {
+          await updateProfile(userCredential.user, { displayName: name });
+          toast.success("Registration Successful!", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+          });
+          router.push("/");
+        }
       } catch (error) {
         console.error("Error creating user:", error);
         toast.error("Registration Failed!", {

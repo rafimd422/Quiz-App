@@ -14,7 +14,7 @@ if(loading){
 
   return (
     <div>
-      {user?.displayName ? (
+      {user && user.displayName !== null ? (
         <IntroPage user={user.displayName} />
       ) : (
         <WelcomeCard />
